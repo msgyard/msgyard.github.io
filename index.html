@@ -188,8 +188,9 @@ footer a{color:var(--ink-2)}
           </div>
           <div class="pdesc" role="cell">
             Access analytics inside the broker: who connects, from where, how they authenticate, which accounts are unused. Adds an Access tab to the management UI and access metrics to the Prometheus endpoint; keeps its own history on each node.
+            <div class="links"><a href="https://msgyard.bitey.ai/rabbitmq-access-insight/">Website</a><a href="https://github.com/msgyard/rabbitmq-access-insight/releases/latest">Download</a></div>
           </div>
-          <div role="cell"><span class="status dev">In development</span></div>
+          <div role="cell"><span class="status rel" id="aiver">Released · v0.1.0</span></div>
         </div>
 
         <div class="row" role="row">
@@ -267,6 +268,10 @@ footer a{color:var(--ink-2)}
   fetch("https://api.github.com/repos/msgyard/rabbitmq-auth-backend-aoptoken/releases/latest")
     .then(function(r){ return r.ok ? r.json() : null; })
     .then(function(j){ if(j && j.tag_name) document.getElementById("aopver").textContent="Released · "+j.tag_name; })
+    .catch(function(){});
+  fetch("https://api.github.com/repos/msgyard/rabbitmq-access-insight/releases/latest")
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(j){ if(j && j.tag_name) document.getElementById("aiver").textContent="Released · "+j.tag_name; })
     .catch(function(){});
 })();
 </script>
