@@ -7,129 +7,148 @@
 <meta name="description" content="Independent open-source tools for message brokers: authentication, access analytics and operations, built to run on unmodified official releases.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
 :root{
-  --bg:#f2f3f0; --panel:#fbfbf9; --panel-2:#e8eae5;
-  --ink:#16191a; --ink-2:#4e5553; --ink-3:#7f8683;
-  --line:#dcdfd9; --line-2:#c9cdc6;
-  --accent:#1f6f5c; --accent-ink:#fff; --accent-soft:#dcebe5;
-  --amber:#a86400; --amber-soft:#f3e6cf;
-  --muted-soft:#e6e8e3;
-  --rail:#b9beb6;
+  --bg:#f5f6f3; --panel:#ffffff; --panel-2:#eceee9;
+  --ink:#10171a; --ink-2:#48535a; --ink-3:#7d878c;
+  --line:#dde1dc; --line-2:#c9cfca;
+  --night:#0c171b; --night-2:#132328; --night-ink:#e9f0ed; --night-dim:#8fa4a3; --rail:#28424a;
+  --signal:#35b39a; --amber:#f0b24a;
+  --accent:#1c7a66; --accent-soft:#dcefe9;
+  --shadow:0 1px 2px rgba(16,23,26,.05),0 18px 40px -22px rgba(16,23,26,.35);
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
   --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --cond:"IBM Plex Sans Condensed","IBM Plex Sans",-apple-system,sans-serif;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --bg:#111413; --panel:#171b1a; --panel-2:#1e2321;
-    --ink:#eaeeeb; --ink-2:#aab2ae; --ink-3:#7a827e;
-    --line:#262c2a; --line-2:#333a37;
-    --accent:#4fbf9f; --accent-ink:#0d1211; --accent-soft:#16302a;
-    --amber:#e2a34a; --amber-soft:#2e2414;
-    --muted-soft:#202523;
-    --rail:#3a423f;
+    --bg:#0f1417; --panel:#151c20; --panel-2:#1b2429;
+    --ink:#e8eeec; --ink-2:#a7b3b6; --ink-3:#768388;
+    --line:#232d32; --line-2:#2f3b41;
+    --night:#091114; --night-2:#0f1c20;
+    --accent:#5fd0b6; --accent-soft:#143029;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 18px 40px -22px rgba(0,0,0,.8);
   }
 }
 :root[data-theme="dark"]{
-  --bg:#111413; --panel:#171b1a; --panel-2:#1e2321;
-  --ink:#eaeeeb; --ink-2:#aab2ae; --ink-3:#7a827e;
-  --line:#262c2a; --line-2:#333a37;
-  --accent:#4fbf9f; --accent-ink:#0d1211; --accent-soft:#16302a;
-  --amber:#e2a34a; --amber-soft:#2e2414;
-  --muted-soft:#202523;
-  --rail:#3a423f;
+  --bg:#0f1417; --panel:#151c20; --panel-2:#1b2429;
+  --ink:#e8eeec; --ink-2:#a7b3b6; --ink-3:#768388;
+  --line:#232d32; --line-2:#2f3b41;
+  --night:#091114; --night-2:#0f1c20;
+  --accent:#5fd0b6; --accent-soft:#143029;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 18px 40px -22px rgba(0,0,0,.8);
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased}
-.wrap{max-width:960px; margin:0 auto; padding-inline:24px}
-a{color:var(--accent); text-decoration:none}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:24px}
+a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
-code{font-family:var(--mono); font-size:.9em}
-h1,h2,h3{text-wrap:balance; line-height:1.15; margin:0}
-:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:4px}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0}
+code{font-family:var(--mono);font-size:.88em}
+:focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:4px}
+img{max-width:100%;display:block}
 
-.top{border-bottom:1px solid var(--line); background:var(--panel)}
-.top .wrap{display:flex; align-items:center; gap:16px; padding-block:14px}
-.brand{font-family:var(--mono); font-weight:600; font-size:15px; letter-spacing:-.01em; display:flex; align-items:center; gap:10px; color:var(--ink)}
+.yard{background:var(--night);color:var(--night-ink);position:relative;overflow:hidden}
+.top{display:flex;align-items:center;gap:18px;padding-block:18px;position:relative;z-index:2}
+.brand{display:flex;align-items:center;gap:10px;color:var(--night-ink);font-family:var(--mono);font-weight:600;font-size:15px}
 .brand:hover{text-decoration:none}
-.mark{display:block}
-.top nav{margin-left:auto; display:flex; gap:22px; align-items:center}
-.top nav a{color:var(--ink-2); font-size:14px; font-weight:500}
-.top nav a:hover{color:var(--ink); text-decoration:none}
-.ghbtn{font-family:var(--mono); font-size:13px; border:1px solid var(--line-2); color:var(--ink) !important; padding:6px 12px; border-radius:7px}
-.ghbtn:hover{border-color:var(--accent)}
-@media(max-width:560px){ .top nav a.hide{display:none} }
+.top nav{margin-left:auto;display:flex;gap:24px;align-items:center}
+.top nav a{color:var(--night-dim);font-size:14px;font-weight:500}
+.top nav a:hover{color:var(--night-ink);text-decoration:none}
+.ghbtn{font-family:var(--mono);font-size:13px;color:var(--night-ink)!important;border:1px solid var(--rail);padding:6px 12px;border-radius:7px}
+.ghbtn:hover{border-color:var(--signal)}
+@media(max-width:600px){.top nav a.hide{display:none}}
 
-.hero{padding-block:72px 40px}
-.eyebrow{font-family:var(--mono); font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:20px}
-.hero h1{font-size:clamp(30px,5.2vw,50px); font-weight:700; letter-spacing:-.025em; max-width:18ch}
-.lede{font-size:clamp(17px,2.3vw,19.5px); color:var(--ink-2); max-width:62ch; margin-top:22px}
+.hero{position:relative;z-index:2;padding-block:56px 30px}
+.plate{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--signal);border:1px solid var(--rail);border-radius:999px;padding:5px 12px 5px 10px}
+.plate i{width:7px;height:7px;border-radius:50%;background:var(--signal);box-shadow:0 0 0 3px rgba(53,179,154,.2)}
+.hero h1{font-family:var(--cond);font-weight:700;font-size:clamp(40px,7.2vw,86px);line-height:.98;letter-spacing:-.02em;margin-top:22px;max-width:13ch}
+.hero h1 em{font-style:normal;color:var(--signal)}
+.hero .lede{color:var(--night-dim);font-size:clamp(17px,2.1vw,20px);max-width:58ch;margin-top:22px}
 
-/* the yard: tracks fanning out from one lead */
-.yard{margin-top:44px; color:var(--rail)}
-.yard svg{display:block; width:100%; height:auto; max-height:120px}
-.yard .lbl{font-family:var(--mono); font-size:11px; fill:var(--ink-3); letter-spacing:.06em}
-.yard .live{stroke:var(--accent)}
-.yard .dotlive{fill:var(--accent)}
-
-section{padding-block:48px; border-top:1px solid var(--line)}
-.sechead{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:22px}
-.sechead h2{font-size:24px; letter-spacing:-.015em}
-.sechead p{margin:0; color:var(--ink-3); font-size:14.5px}
-
-/* board of projects */
-.board{border:1px solid var(--line); border-radius:10px; background:var(--panel); overflow:hidden}
-.row{display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,2.4fr) 150px; gap:20px; padding:20px 22px; align-items:start}
-.row + .row{border-top:1px solid var(--line)}
-.row.head{padding-block:10px; background:var(--panel-2); font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3)}
-.pname{font-family:var(--mono); font-weight:600; font-size:14.5px; word-break:break-word}
-.pname a{color:var(--ink)}
-.pname a:hover{color:var(--accent); text-decoration:none}
-.pmeta{margin-top:6px; display:flex; flex-wrap:wrap; gap:6px}
-.tag{font-family:var(--mono); font-size:11.5px; color:var(--ink-2); border:1px solid var(--line-2); padding:1px 7px; border-radius:5px}
-.pdesc{color:var(--ink-2); font-size:15px}
-.pdesc .links{margin-top:8px; font-size:14px; display:flex; gap:16px; flex-wrap:wrap}
-.status{font-family:var(--mono); font-size:12.5px; font-weight:500; display:inline-flex; align-items:center; gap:7px; padding:3px 9px; border-radius:999px; white-space:nowrap}
-.status::before{content:""; width:7px; height:7px; border-radius:50%; background:currentColor}
-.status.rel{color:var(--accent); background:var(--accent-soft)}
-.status.dev{color:var(--amber); background:var(--amber-soft)}
-.status.plan{color:var(--ink-3); background:var(--muted-soft)}
-.status.plan::before{background:transparent; border:1.5px solid currentColor; width:5px; height:5px}
-@media(max-width:720px){
-  .row{grid-template-columns:1fr; gap:10px}
-  .row.head{display:none}
+.tracks{position:relative;z-index:1}
+.tracks svg{display:block;width:100%;height:auto;min-height:120px}
+.tracks .rail{stroke:var(--rail)}
+.tracks .live{stroke:var(--signal)}
+.tracks .lbl{font-family:var(--mono);font-size:12px;letter-spacing:.08em;fill:var(--night-dim)}
+.tracks .lbl.on{fill:var(--night-ink)}
+.tracks .dot{fill:var(--signal)}
+.tracks .amber{fill:var(--amber)}
+@media(prefers-reduced-motion:no-preference){
+  .tracks .run{stroke-dasharray:60 1900;animation:run 6s linear infinite}
+  .tracks .run.b{animation-delay:2.4s}
+  @keyframes run{from{stroke-dashoffset:1960}to{stroke-dashoffset:0}}
 }
 
-.principles{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px 40px}
-.principles h3{font-size:16.5px; letter-spacing:-.005em}
-.principles p{margin:8px 0 0; color:var(--ink-2); font-size:15px}
-@media(max-width:640px){ .principles{grid-template-columns:1fr} }
+section{padding-block:72px}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.sec-h{display:flex;align-items:end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:28px}
+.sec-h h2{font-family:var(--cond);font-weight:700;font-size:clamp(28px,4vw,40px);letter-spacing:-.01em;margin-top:8px}
+.sec-h p{color:var(--ink-2);max-width:44ch}
 
-.lic{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:10px; overflow:hidden}
-.lic div{background:var(--panel); padding:18px 20px}
-.lic b{display:block; font-family:var(--mono); font-size:14px}
-.lic span{display:block; color:var(--ink-2); font-size:14.5px; margin-top:6px}
-@media(max-width:720px){ .lic{grid-template-columns:1fr} }
+.products{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:22px}
+@media(max-width:900px){.products{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+.card .shot{display:block;background:var(--night-2);padding:18px 18px 0;border-bottom:1px solid var(--line);height:300px;overflow:hidden}
+.card .shot img{border-radius:8px 8px 0 0;width:100%;height:auto}
+.card .code{background:var(--night-2);color:var(--night-ink);font-family:var(--mono);font-size:13px;line-height:1.7;padding:22px;border-bottom:1px solid var(--line);height:300px;display:flex;flex-direction:column;justify-content:center;gap:16px;overflow:hidden}
+.card .code .c{color:var(--night-dim)}
+.card .code .k{color:var(--signal)}
+.card .code .s{color:var(--amber)}
+.card .code pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:inherit}
+.card .body{padding:22px 24px 24px;display:flex;flex-direction:column;gap:12px;flex:1}
+.meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);border:1px solid var(--line-2);border-radius:6px;padding:1px 8px}
+.status{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:2px 10px;display:inline-flex;gap:7px;align-items:center}
+.status::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.card h3{font-family:var(--cond);font-weight:600;font-size:26px;letter-spacing:-.005em}
+.card h3 small{display:block;font-family:var(--mono);font-size:12.5px;font-weight:400;color:var(--ink-3);margin-top:4px;letter-spacing:0}
+.card p{color:var(--ink-2)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:6px}
+.btn{font-family:var(--mono);font-size:13.5px;font-weight:500;padding:9px 15px;border-radius:8px;border:1px solid var(--line-2);color:var(--ink)}
+.btn.primary{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.btn:hover{text-decoration:none;border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.15)}
 
-footer{border-top:1px solid var(--line); padding-block:30px 44px; color:var(--ink-3); font-size:13.5px}
-footer .wrap{display:grid; gap:10px}
-footer .fr{display:flex; flex-wrap:wrap; gap:8px 20px; align-items:center}
-footer a{color:var(--ink-2)}
-.themebtn{margin-left:auto; font-family:var(--mono); font-size:12.5px; background:none; color:var(--ink-2); border:1px solid var(--line-2); border-radius:6px; padding:4px 10px; cursor:pointer}
-.themebtn:hover{border-color:var(--accent); color:var(--ink)}
-@media(prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+.next{margin-top:22px;border:1px dashed var(--line-2);border-radius:14px;padding:18px 22px;display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,1fr);gap:14px 28px;align-items:start}
+.next .kicker{padding-top:3px}
+.next b{font-family:var(--mono);font-size:14px;font-weight:600}
+.next span{display:block;color:var(--ink-2);font-size:14.5px;margin-top:2px}
+@media(max-width:760px){.next{grid-template-columns:1fr}}
+
+.principles{border-top:1px solid var(--line)}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}
+@media(max-width:900px){.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.grid4{grid-template-columns:1fr}}
+.pr{border-top:2px solid var(--ink);padding-top:14px}
+.pr h3{font-family:var(--cond);font-weight:600;font-size:20px}
+.pr p{color:var(--ink-2);font-size:15px;margin-top:8px}
+.lic{margin-top:44px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel)}
+.lic div{padding:18px 20px}
+.lic div+div{border-left:1px solid var(--line)}
+.lic b{font-family:var(--mono);font-size:14px}
+.lic span{display:block;color:var(--ink-2);font-size:14.5px;margin-top:4px}
+@media(max-width:760px){.lic{grid-template-columns:1fr}.lic div+div{border-left:0;border-top:1px solid var(--line)}}
+
+footer{background:var(--night);color:var(--night-dim);font-size:13.5px}
+footer .wrap{padding-block:28px 40px;display:grid;gap:10px}
+footer .fr{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center}
+footer a{color:var(--night-ink)}
+.themebtn{margin-left:auto;font-family:var(--mono);font-size:12.5px;background:none;color:var(--night-dim);border:1px solid var(--rail);border-radius:6px;padding:4px 10px;cursor:pointer}
+.themebtn:hover{color:var(--night-ink);border-color:var(--signal)}
 </style>
 </head>
 <body>
 
-<header class="top">
-  <div class="wrap">
+<div class="yard">
+  <div class="wrap top">
     <a class="brand" href="./" aria-label="msgyard home">
-      <svg class="mark" width="22" height="18" viewBox="0 0 22 18" aria-hidden="true">
+      <svg width="24" height="20" viewBox="0 0 22 18" aria-hidden="true">
         <path d="M1 9 H7 C11 9 12 2 17 2 H21 M7 9 H21 M7 9 C11 9 12 16 17 16 H21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <circle cx="4" cy="9" r="2.4" fill="var(--accent)"/>
+        <circle cx="4" cy="9" r="2.4" fill="var(--signal)"/>
       </svg>
       msgyard
     </a>
@@ -139,104 +158,105 @@ footer a{color:var(--ink-2)}
       <a class="ghbtn" href="https://github.com/msgyard">GitHub</a>
     </nav>
   </div>
-</header>
 
-<main>
   <div class="wrap hero">
-    <div class="eyebrow">Open source · message brokers</div>
-    <h1>Tools for the brokers you already run.</h1>
-    <p class="lede">msgyard is a home for independent, community-built tools around message brokers — authentication, access analytics and day-to-day operations. Every tool runs on unmodified official releases, works on its own, and is free to use.</p>
-
-    <div class="yard" aria-hidden="true">
-      <svg viewBox="0 0 900 110" preserveAspectRatio="xMinYMid meet">
-        <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <path d="M0 55 H150"/>
-          <path class="live" d="M150 55 C230 55 250 14 340 14 H900"/>
-          <path class="live" d="M150 55 H900"/>
-          <path d="M150 55 C230 55 250 96 340 96 H900" stroke-dasharray="2 7"/>
-        </g>
-        <circle class="dotlive" cx="150" cy="55" r="5"/>
-        <text class="lbl" x="360" y="8">RABBITMQ · AUTHENTICATION</text>
-        <text class="lbl" x="360" y="49">RABBITMQ · ACCESS ANALYTICS</text>
-        <text class="lbl" x="360" y="90">MORE BROKERS · LATER</text>
-      </svg>
-    </div>
+    <span class="plate"><i></i>Open source for message brokers</span>
+    <h1>Tools for the brokers <em>you already run.</em></h1>
+    <p class="lede">Independent, community-built plugins and services for authentication, access analytics and day-to-day operations — on unmodified official releases, free to use.</p>
   </div>
 
+  <div class="tracks" aria-hidden="true">
+    <svg viewBox="0 0 1440 170" preserveAspectRatio="xMidYMid slice">
+      <g fill="none" stroke-width="2" stroke-linecap="round">
+        <path class="rail" d="M0 85 H330"/>
+        <path class="rail" d="M330 85 C430 85 450 30 560 30 H1440"/>
+        <path class="rail" d="M330 85 H1440"/>
+        <path class="rail" d="M330 85 C430 85 450 140 560 140 H1440" stroke-dasharray="3 9"/>
+        <path class="live run" d="M0 85 H330 C430 85 450 30 560 30 H1440"/>
+        <path class="live run b" d="M0 85 H1440"/>
+      </g>
+      <circle class="dot" cx="330" cy="85" r="5"/>
+      <circle class="dot" cx="620" cy="30" r="3.5"/><circle class="dot" cx="620" cy="85" r="3.5"/>
+      <circle class="amber" cx="620" cy="140" r="3.5"/>
+      <text class="lbl on" x="640" y="24">RABBITMQ · AUTHENTICATION</text>
+      <text class="lbl on" x="640" y="79">RABBITMQ · ACCESS ANALYTICS</text>
+      <text class="lbl" x="640" y="134">NEXT · MORE BROKERS, ONE SERVER</text>
+    </svg>
+  </div>
+</div>
+
+<main>
   <section id="projects">
     <div class="wrap">
-      <div class="sechead"><h2>Projects</h2><p>Each project lives in its own repository and releases on its own schedule.</p></div>
-      <div class="board" role="table" aria-label="Projects">
-        <div class="row head" role="row"><div role="columnheader">Project</div><div role="columnheader">What it does</div><div role="columnheader">Status</div></div>
+      <div class="sec-h">
+        <div><div class="kicker">Projects</div><h2>On the main line</h2></div>
+        <p>Each project lives in its own repository, works on its own and releases on its own schedule.</p>
+      </div>
 
-        <div class="row" role="row">
-          <div role="cell">
-            <div class="pname"><a href="https://github.com/msgyard/rabbitmq-auth-backend-aoptoken">rabbitmq-auth-backend-aoptoken</a></div>
-            <div class="pmeta"><span class="tag">RabbitMQ plugin</span><span class="tag">MPL-2.0</span></div>
+      <div class="products">
+        <article class="card">
+          <a class="shot" href="https://msgyard.bitey.ai/rabbitmq-access-insight/" aria-label="Access Insight for RabbitMQ">
+            <img src="https://msgyard.bitey.ai/rabbitmq-access-insight/img/overview.png" width="1360" height="860" alt="The Access tab in the RabbitMQ management UI: accounts by activity, authentication methods, history on each node" loading="lazy">
+          </a>
+          <div class="body">
+            <div class="meta"><span class="status" id="aiver">Released · v0.1.0</span><span class="chip">RabbitMQ plugin</span><span class="chip">MPL-2.0</span></div>
+            <h3>Access Insight<small>rabbitmq_access_insight</small></h3>
+            <p>Who connects to RabbitMQ, from where, and how they authenticate — every account against actual logins, every login by result and method, every session. An Access tab in the management UI, an HTTP API and Prometheus metrics, with history that survives restarts and lost nodes.</p>
+            <div class="actions">
+              <a class="btn primary" href="https://msgyard.bitey.ai/rabbitmq-access-insight/">Website</a>
+              <a class="btn" href="https://github.com/msgyard/rabbitmq-access-insight/releases/latest">Download</a>
+              <a class="btn" href="https://github.com/msgyard/rabbitmq-access-insight">GitHub</a>
+            </div>
           </div>
-          <div class="pdesc" role="cell">
-            Lets clients log in with a pre-issued signed token in the password field, alongside ordinary passwords — same account, no client changes. Publishes an audit event for every verified token.
-            <div class="links"><a href="https://aoptoken.bitey.ai/">Website</a><a href="https://github.com/msgyard/rabbitmq-auth-backend-aoptoken/releases/latest">Download</a></div>
-          </div>
-          <div role="cell"><span class="status rel" id="aopver">Released · v0.3.0</span></div>
-        </div>
+        </article>
 
-        <div class="row" role="row">
-          <div role="cell">
-            <div class="pname"><a href="https://github.com/msgyard/rabbitmq-access-insight">rabbitmq-access-insight</a></div>
-            <div class="pmeta"><span class="tag">RabbitMQ plugin</span><span class="tag">MPL-2.0</span></div>
+        <article class="card">
+          <div class="code" aria-label="Example: logging in with a token">
+<pre><span class="c"># the same account, two kinds of credential</span>
+username: <span class="s">orders-service</span>
+password: <span class="k">token:</span><span class="s">eyJhbGciOiJSUzI1NiJ9.eyJzdWIi…</span></pre>
+<pre><span class="c"># rabbitmq.conf</span>
+auth_backends.1 = internal
+auth_backends.2.authn =
+    <span class="k">rabbit_auth_backend_aoptoken</span>
+auth_backends.2.authz = internal</pre>
           </div>
-          <div class="pdesc" role="cell">
-            Access analytics inside the broker: who connects, from where, how they authenticate, which accounts are unused. Adds an Access tab to the management UI and access metrics to the Prometheus endpoint; keeps its own history on each node.
-            <div class="links"><a href="https://msgyard.bitey.ai/rabbitmq-access-insight/">Website</a><a href="https://github.com/msgyard/rabbitmq-access-insight/releases/latest">Download</a></div>
+          <div class="body">
+            <div class="meta"><span class="status" id="aopver">Released · v0.3.0</span><span class="chip">RabbitMQ plugin</span><span class="chip">MPL-2.0</span></div>
+            <h3>aoptoken<small>rabbitmq_auth_backend_aoptoken</small></h3>
+            <p>Log in with a pre-issued signed token in the password field, next to ordinary passwords — same account, no client changes. HS, RS and ES algorithms; an audit event for every verified token.</p>
+            <div class="actions">
+              <a class="btn primary" href="https://msgyard.bitey.ai/rabbitmq-auth-backend-aoptoken/">Website</a>
+              <a class="btn" href="https://github.com/msgyard/rabbitmq-auth-backend-aoptoken/releases/latest">Download</a>
+              <a class="btn" href="https://github.com/msgyard/rabbitmq-auth-backend-aoptoken">GitHub</a>
+            </div>
           </div>
-          <div role="cell"><span class="status rel" id="aiver">Released · v0.1.0</span></div>
-        </div>
+        </article>
+      </div>
 
-        <div class="row" role="row">
-          <div role="cell">
-            <div class="pname">access-insight-server</div>
-            <div class="pmeta"><span class="tag">Service</span><span class="tag">AGPL-3.0</span></div>
-          </div>
-          <div class="pdesc" role="cell">
-            Optional companion service for long-term history, reports across clusters, migration checks and event forwarding. Broker-neutral: RabbitMQ first, other brokers through their own connectors.
-          </div>
-          <div role="cell"><span class="status plan">Planned</span></div>
-        </div>
-
-        <div class="row" role="row">
-          <div role="cell">
-            <div class="pname">access-insight-spec</div>
-            <div class="pmeta"><span class="tag">Specification</span><span class="tag">MPL-2.0</span></div>
-          </div>
-          <div class="pdesc" role="cell">
-            The public contract shared by the tools above: the query API, the record format and the access event convention that any authentication backend can follow.
-          </div>
-          <div role="cell"><span class="status plan">Planned</span></div>
-        </div>
+      <div class="next">
+        <div class="kicker">Next on the track</div>
+        <div><b>access-insight-server</b><span>Optional service for long-term history, cross-cluster reports, migration checks and event forwarding — for RabbitMQ first, other brokers through their own connectors. AGPL-3.0.</span></div>
+        <div><b>access-insight-spec</b><span>The shared contract: query API, record format, and the access event convention any authentication backend can follow. MPL-2.0.</span></div>
       </div>
     </div>
   </section>
 
-  <section id="principles">
+  <section id="principles" class="principles">
     <div class="wrap">
-      <div class="sechead"><h2>Principles</h2></div>
-      <div class="principles">
-        <div><h3>Official releases, unmodified</h3><p>Nothing here requires a patched or repackaged broker. Plugins install into the stock distribution and can be enabled or disabled at runtime.</p></div>
-        <div><h3>Each tool stands alone</h3><p>No project depends on another to work. Where tools meet, they meet through a published convention, not through knowledge of each other.</p></div>
-        <div><h3>Observe, never decide</h3><p>Analytics tools only watch and record. They never take part in allowing or refusing a connection, and never store passwords, tokens or message bodies.</p></div>
-        <div><h3>Verified against real clusters</h3><p>Every release is tested end to end on multi-node clusters across the supported broker and Erlang/OTP versions, not only in unit tests.</p></div>
+      <div class="sec-h">
+        <div><div class="kicker">Principles</div><h2>How the tools are built</h2></div>
       </div>
-    </div>
-  </section>
-
-  <section id="licensing">
-    <div class="wrap">
-      <div class="sechead"><h2>Licensing</h2><p>Free to use for everyone, companies included. Improvements to the tools themselves come back to the community.</p></div>
+      <div class="grid4">
+        <div class="pr"><h3>Official releases, unmodified</h3><p>No patched or repackaged broker. Plugins install into the stock distribution and are enabled or disabled at runtime.</p></div>
+        <div class="pr"><h3>Each tool stands alone</h3><p>No project needs another to work. Where tools meet, they meet through a published convention.</p></div>
+        <div class="pr"><h3>Observe, never decide</h3><p>Analytics only watch and record; they never allow or refuse a connection, and never store passwords, tokens or message bodies.</p></div>
+        <div class="pr"><h3>Verified on real clusters</h3><p>Every release is tested end to end on multi-node clusters across the supported broker and Erlang/OTP versions.</p></div>
+      </div>
       <div class="lic">
-        <div><b>MPL-2.0</b><span>Plugins and specifications — the same license as RabbitMQ itself.</span></div>
+        <div><b>MPL-2.0</b><span>Plugins and specifications — the same license as RabbitMQ.</span></div>
         <div><b>AGPL-3.0</b><span>Standalone services, so hosted versions stay open too.</span></div>
-        <div><b>DCO</b><span>Contributions are signed off with <code>git commit -s</code>; no CLA.</span></div>
+        <div><b>DCO</b><span>Contributions signed off with <code>git commit -s</code>; no CLA.</span></div>
       </div>
     </div>
   </section>
@@ -249,7 +269,7 @@ footer a{color:var(--ink-2)}
       <a href="https://github.com/msgyard">github.com/msgyard</a>
       <button class="themebtn" id="theme" type="button">Theme</button>
     </div>
-    <p style="margin:0">msgyard is an independent community project. It is not affiliated with, endorsed or sponsored by Broadcom or the RabbitMQ team. RabbitMQ is a trademark of Broadcom Inc. and its subsidiaries.</p>
+    <p>msgyard is an independent community project. It is not affiliated with, endorsed or sponsored by Broadcom or the RabbitMQ team. RabbitMQ is a trademark of Broadcom Inc. and its subsidiaries.</p>
   </div>
 </footer>
 
@@ -264,15 +284,13 @@ footer a{color:var(--ink-2)}
     root.setAttribute("data-theme",next);
     try{ localStorage.setItem(key,next); }catch(e){}
   });
-  // Show the actual latest aoptoken release when the API is reachable; the static text stays otherwise.
-  fetch("https://api.github.com/repos/msgyard/rabbitmq-auth-backend-aoptoken/releases/latest")
-    .then(function(r){ return r.ok ? r.json() : null; })
-    .then(function(j){ if(j && j.tag_name) document.getElementById("aopver").textContent="Released · "+j.tag_name; })
-    .catch(function(){});
-  fetch("https://api.github.com/repos/msgyard/rabbitmq-access-insight/releases/latest")
-    .then(function(r){ return r.ok ? r.json() : null; })
-    .then(function(j){ if(j && j.tag_name) document.getElementById("aiver").textContent="Released · "+j.tag_name; })
-    .catch(function(){});
+  // Show the latest release of each project when the API is reachable.
+  [["rabbitmq-access-insight","aiver"],["rabbitmq-auth-backend-aoptoken","aopver"]].forEach(function(p){
+    fetch("https://api.github.com/repos/msgyard/"+p[0]+"/releases/latest")
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(j){ if(j && j.tag_name) document.getElementById(p[1]).textContent="Released · "+j.tag_name; })
+      .catch(function(){});
+  });
 })();
 </script>
 </body>
